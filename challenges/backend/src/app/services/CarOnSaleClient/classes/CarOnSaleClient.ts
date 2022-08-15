@@ -12,7 +12,7 @@ export class CarOnSaleClient implements ICarOnSaleClient {
     /**
      *
      */
-    constructor(@inject(DependencyIdentifier.CAR_ON_SALE_REPO) private carOnSaleRepo: ICarOnSaleRepo) {
+    public constructor(@inject(DependencyIdentifier.CAR_ON_SALE_REPO) private carOnSaleRepo: ICarOnSaleRepo) {
     }
 
     public async getAggregatedAuctions(): Promise<AggregatedAuction> {
