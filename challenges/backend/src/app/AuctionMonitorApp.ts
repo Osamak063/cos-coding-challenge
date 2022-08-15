@@ -14,7 +14,7 @@ export class AuctionMonitorApp {
     public async start(): Promise<void> {
         this.logger.log(`Auction Monitor started.`);
         try {
-            let aggregatedAuctions = await this.carOnSaleClient.getAggregatedAuctions();
+            const aggregatedAuctions = await this.carOnSaleClient.getAggregatedAuctions();
             this.logger.log(`Number of Auctions: ${aggregatedAuctions.total}`);
             this.logger.log(`Average Number of Bids on an Auction: ${aggregatedAuctions.avgNumOfBids}`);
             this.logger.log(`Average Percentage of the Auction Progress: ${aggregatedAuctions.avgPercentageOfProgress}`);
