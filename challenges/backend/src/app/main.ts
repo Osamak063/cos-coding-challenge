@@ -6,8 +6,8 @@ import { AuctionMonitorApp } from "./AuctionMonitorApp";
 import { ICarOnSaleClient } from "./services/CarOnSaleClient/interface/ICarOnSaleClient";
 import { CarOnSaleClient } from "./services/CarOnSaleClient/classes/CarOnSaleClient";
 import { ICarOnSaleRepo } from "./repositories/CarOnSaleRepo/interface/ICarOnSaleRepo";
-import dotenv from 'dotenv';
-import { axiosInstance } from '../app/interceptors/CarOnSaleAPIInterceptor'
+import dotenv from "dotenv";
+import { axiosInstance } from "../app/interceptors/CarOnSaleAPIInterceptor";
 import { AxiosInstance } from "axios";
 import { CarOnSaleRepo } from "./repositories/CarOnSaleRepo/classes/CarOnSaleRepo";
 
