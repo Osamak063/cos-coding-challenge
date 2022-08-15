@@ -2,7 +2,7 @@ import axios from "axios";
 
 export let axiosInstance = axios.create({
     timeout: 2000,
-    headers: { "accept": 'application/json' }
+    headers: { "accept": "application/json" }
 });
 
 axiosInstance.interceptors.request.use((config) => {
