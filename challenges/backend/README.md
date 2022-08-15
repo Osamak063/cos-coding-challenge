@@ -60,6 +60,7 @@ npm test
 - We can use secrets management tools like HashiCorp vault or AWS Secret manager to control access to sensitive
   credentials like Email and passsword of CarOnSale API.
 - Running list of auctions API returns page and total fields in the response. Pagination is not yet implemented in this application because of unclear documentation about pagination parameters in this API in swagger. Documentation of this API only defines filter and count query params which are not related to pagination.
+- Filter out the Running list of auctions with null/zero values of minimumRequiredAsk in response Axios interceptor instead of the CarOnSaleClient service.
 
 ## Authors
 
