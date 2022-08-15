@@ -27,7 +27,7 @@ And paste it into the newly created .env file.
 .env file often includes sensitive and confidential information. Following the best practices of development, it is part of .gitignore. For a quick start, I have added the correct values of environment variables in
 `\cos-coding-challenge\challenges\backend\envs\development.env` file.
 
-Run command:
+#### Run command:
 
 ```
 npm start
@@ -36,7 +36,7 @@ npm start
 The application will display the desired output in the console and if the CarOnSale API is failing, the process
 will be quit with exit code -1.
 
-### Testing
+#### Testing
 
 ```
 npm test
