@@ -20,10 +20,13 @@ export class CarOnSaleClient implements ICarOnSaleClient {
 
         const { items } = listOfRunningAuctions || [];
 
+        const filteredItems = items?.
+            filter(item => item.minimumRequiredAsk !== null && item.minimumRequiredAsk !== 0);
+
         const aggregatedAuction: AggregatedAuction = {
-            avgNumOfBids: this.getAvgNumOfBids(items),
-            total: items?.length || 0, // TODO safe checks
-            avgPercentageOfProgress: this.getAvgPercentageOfProgress(items)
+            avgNumOfBids: this.getAvgNumOfBids(filteredItems),
+            total: filteredItems?.length || 0, // TODO safe checks
+            avgPercentageOfProgress: this.getAvgPercentageOfProgress(filteredItems)
         }
         return aggregatedAuction;
     }
@@ -34,12 +37,10 @@ export class CarOnSaleClient implements ICarOnSaleClient {
     }
 
     private getAvgPercentageOfProgress(items: AuctionItem[]): number {
-        const avgPercentages = items?.
-            filter(item => item.minimumRequiredAsk != null && item.minimumRequiredAsk != 0)
-            .map(item => {
-                return 100 * (item.currentHighestBidValue /
-                    (item.minimumRequiredAsk))
-            })
+        const avgPercentages = items?.map(item => {
+            return 100 * (item.currentHighestBidValue /
+                (item.minimumRequiredAsk))
+        })
             || [];
 
         const avgPercentageOfProgress = MathUtil.Average(avgPercentages);
