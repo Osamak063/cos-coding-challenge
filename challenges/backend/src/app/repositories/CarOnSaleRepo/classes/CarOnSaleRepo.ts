@@ -1,4 +1,3 @@
-//import axios from "axios";
 import { inject, injectable } from "inversify";
 import { AuthenticationResponse } from "../dtos/AuthenticationResponse";
 import { RunningAuctionList } from "../dtos/RunningAuctionsList";
@@ -8,14 +7,14 @@ import { DependencyIdentifier } from "../../../DependencyIdentifiers";
 
 @injectable()
 export class CarOnSaleRepo implements ICarOnSaleRepo {
-    runningAuctionListEndpoint: string
-    authEndpoint: string
-    email: string;
-    password: string;
+    private runningAuctionListEndpoint: string
+    private authEndpoint: string
+    private email: string;
+    private password: string;
     /**
      *
      */
-    constructor(@inject(DependencyIdentifier.AXIOS_INSTANCE) private axiosInstance: AxiosInstance) {
+    public constructor(@inject(DependencyIdentifier.AXIOS_INSTANCE) private axiosInstance: AxiosInstance) {
         this.runningAuctionListEndpoint = process.env.RUNNING_AUCTION_LIST_ENDPOINT || "";
         this.authEndpoint = process.env.AUTHENTICATION_ENDPOINT || "";
         this.email = process.env.EMAIL || "";
