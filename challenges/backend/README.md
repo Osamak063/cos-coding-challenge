@@ -1,35 +1,66 @@
 # Backend Challenge
 
-Welcome to the CarOnSale backend coding challenge.
+## Getting Started
 
-In the `/src/app` directory, you find a typescript interface `ICarOnSaleClient` for a service that describes a service to retrieve a list of running auctions from the CarOnSale development API.
+Clone the code from the repository and follow the below given instructions.
 
-Please implement the service using the buyer user with the following credentials for authentication:
-- Email: `buyer-challenge@caronsale.de`
-- Password: `Test123.` - notice the period.
+### Git Branch
 
-The API is documented here: https://api-core-dev.caronsale.de/swagger/#/
+Please checkout and pull from branch osama/backend-cos-coding-challenge/development.
 
-Please fulfill the following tasks (according to the description above):
+### Installation & Setup
 
-0. Fork the repo
-1. Install all Node.js dependencies for the project
-2. Implement the ICarOnSaleClient interface in a class with method stubs (no functionality) 
-3. Implement Mocha/Chai component tests in the ``/CarOnSaleClient/classes`` directory that test the desired behavior (Tests should be run when executing ``npm test``)
-4. Implement the actual service to retrieve the list of running auctions (by using the CarOnSale RESTful API, see Swagger documentation)
-5. Come up with an interface definition that you can use to access the response objects of a CarOnSale API call (see TODO tag in `ICarOnSaleClient` and check the Swagger documentation for the response objects).
-6. Register your service to the dependency injection container in ``main.ts``
-7. Integrate your service into the application: If the application runs, the service should be used to retrieve running auctions from the CarOnSale API, display the number of auctions, average number of bids on an auction as well as the average percentage of the auction progress (ratio of current highest bid value and minimum required ask) and the exit with exit code 0. If the service is failing, the process should be quit with exit code -1.
-8. Commit and push everything to your branch
-9. Inform <coding-challenge@caronsale.de> that you finished the challenge :)
+Install dependencies and node_modules by running the command:
 
-Additional Hints:
+```
+npm install
+```
 
- * Please make sure, code quality is ensured (i.e. validating against the tslint file is not failing).
- * Please focus on correct and uniform formatting.
- * Be sure to use clear commit messages.
- * You can add as many (e.g. static or helper) classes as you want.
- * You can install any additional npm packages.
- * This is not a production-ready code, so, feel free to improve it ;)
- 
-If you have any questions, feel free to contact us via <coding-challenge@caronsale.de>.
+### Running
+
+Before running, make sure to create `.env` file in the directory
+\cos-coding-challenge\challenges\backend\.env
+Copy all environment variables from
+\cos-coding-challenge\challenges\backend\envs\development.env
+And paste it into the newly created .env file.
+
+.env file often includes sensitive and confidential information. Following the best practices of development, it is part of .gitignore. For a quick start, I have added the correct values of environment variables in
+\cos-coding-challenge\challenges\backend\envs\development.env file.
+
+Run command:
+
+```
+npm start
+```
+
+The application will display the desired output in the console and if the CarOnSale API is failing, the process
+will be quit with exit code -1.
+
+### Testing
+
+```
+npm test
+```
+
+## Project Structure
+
+- src/app/interceptors/CarOnSaleAPIInterceptor.ts: Intercepts requests and responses of CarOnSale API before they are handled by then or catch. It has exported AxiosInstance with basic configuration and some basic validation in request and response interceptors.
+- src/app/repositories/CarOnSaleRepo/classes/CarOnSaleRepo.ts: CarOnSaleRepo class is responsible for creating HTTP requests to CarOnSale API using AxiosInstance and returning the responses in DTOs. With CarOnSaleRepo the responses from CarOnSale API can be stubbed in unit tests.
+- src/app/services/CarOnSaleRepo/dtos/AuthenticationResponse.ts: AuthenticationResponse is a DTO (Data Transfer Object) that carries data between Axios response and CarOnSaleRepo. Contains authToken and userId from Authentication endpoint response.
+- src/app/services/CarOnSaleRepo/dtos/RunningAuctionsList.ts: RunningAuctionsList is a DTO (Data Transfer Object) that carries data between Axios response and CarOnSaleRepo. Contains fields that are used in the calculation of aggregated auctions result from the Running Auctions List endpoint response.
+- src/app/services/CarOnSaleClient/classes/CarOnSaleClient.ts: CarOnSaleClient class is responsible for calculating Aggregated Auction result (Business logic) and returning the result in DTOs. Unit tests are written for testing the business logic of this class.
+- src/app/services/CarOnSaleClient/dtos/AggregatedAuction.ts: AggregatedAuction is a DTO (Data Transfer Object) that carries data between AuctionMonitorApp and CarOnSaleClient. Contains AggregatedAuction result.
+- src/app/services/Logger/classes/Logger.ts: The logger class is responsible for logging data in the console.
+- src/app/util/MathUtil.ts: MathUtil is a utility for some basic calculations which adds reusability to code.
+- src/test/services/CarOnSaleClient.spec.ts: CarOnSaleClient.spec.ts contains unit tests for CarOnSaleClient with CarOnSaleRepo stubs for testing.
+
+## Limitations/Known Improvements
+
+- There is no saving mechanism of authToken in this app right now. For improvement we can save/cache the authToken in the first call to authentication endpoint and use that token for subsequent requests without calling authentication endpoint everytime. Only call authentication endpoint when authToken expires.
+- We can use secrets management tools like HashiCorp vault or AWS Secret manager to control access to sensitive
+  credentials like Email and passsword of CarOnSale API.
+- Running list of auctions API returns page and total fields in the response. Pagination is not yet implemented in this application because of unclear documentation about pagination parameters in this API in swagger. Documentation of this API only defines filter and count query params which are not related to pagination.
+
+## Authors
+
+- Osama Khalid
